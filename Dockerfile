@@ -88,6 +88,7 @@ RUN pip install motioneye
 #    subversion && \
 #    apt-get autoclean -y && apt-get autoremove -y
 RUN  apt-get clean && apt-get autoclean -y && apt-get autoremove -y
+RUN  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # R/W needed for motioneye to update configurations
 VOLUME /etc/motioneye
