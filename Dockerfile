@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get autoclean && apt-get autoremove
 
-RUN apt-get --yes install locales
+RUN apt-get -q -y --no-install-recommends install locales
 RUN locale-gen en_GB.UTF-8
 ENV LANGUAGE en_GB.UTF-8
 ENV LC_ALL en_GB.UTF-8
@@ -14,7 +14,7 @@ ENV LANG en_GB.UTF-8
 ENV LC_TYPE en_GB.UTF-8
 ENV TZ Europe/London
 
-RUN apt-get --yes install \
+RUN apt-get -q -y --no-install-recommends install \
     automake \
     autoconf \
     build-essential \
@@ -35,8 +35,7 @@ RUN apt-get --yes install \
     subversion \
     v4l-utils
 
-
-RUN apt-get --yes install \
+RUN apt-get -q -y --no-install-recommends install \
     autoconf \
     automake \
     build-essential \
@@ -45,15 +44,14 @@ RUN apt-get --yes install \
     libavdevice-dev \
     libavformat-dev \
     libavutil-dev \
-    libjpeg62 \
-    libjpeg62-dev \
     libjpeg-turbo8 \
     libjpeg-turbo8-dev \
     libswscale-dev \
     libtool \
     libzip-dev \
     libwebp-dev \
-    pkgconf
+    pkgconf \
+    x264
 
 
 # Pip
