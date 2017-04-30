@@ -33,8 +33,28 @@ RUN apt-get --yes install \
     python-pip \
     python-setuptools \
     subversion \
-    v4l-utils && \
-    apt-get clean
+    v4l-utils
+
+
+RUN apt-get --yes install \
+    autoconf \
+    automake \
+    build-essential \
+    git \
+    libavcodec-dev \
+    libavdevice-dev \
+    libavformat-dev \
+    libavutil-dev \
+    libjpeg62 \
+    libjpeg62-dev \
+    libjpeg-turbo8 \
+    libjpeg-turbo8-dev \
+    libswscale-dev \
+    libtool \
+    libzip-dev \
+    libwebp-dev \
+    pkgconf
+
 
 # Pip
 RUN pip install tornado jinja2 pillow pycurl
@@ -69,6 +89,7 @@ RUN pip install motioneye
 #    python-setuptools \
 #    subversion && \
 #    apt-get autoclean -y && apt-get autoremove -y
+RUN  apt-get clean && apt-get autoclean -y && apt-get autoremove -y
 
 # R/W needed for motioneye to update configurations
 VOLUME /etc/motioneye
