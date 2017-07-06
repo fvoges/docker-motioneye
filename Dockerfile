@@ -14,79 +14,14 @@ ENV LANG en_GB.UTF-8
 ENV LC_TYPE en_GB.UTF-8
 ENV TZ Europe/London
 
-RUN apt-get -q -y --no-install-recommends install \
-    automake \
-    autoconf \
-    build-essential \
-    ffmpeg \
-    git \
-    libav-tools \
-    libavcodec-dev \
-    libavformat-dev \
-    libavutil-dev \
-    libcurl4-openssl-dev \
-    libjpeg-dev \
-    libssl-dev \
-    libswscale-dev \
-    pkgconf \
-    python-dev \
-    python-pip \
-    python-setuptools \
-    subversion \
-    v4l-utils
-
-RUN apt-get -q -y --no-install-recommends install \
-    autoconf \
-    automake \
-    build-essential \
-    git \
-    libavcodec-dev \
-    libavdevice-dev \
-    libavformat-dev \
-    libavutil-dev \
-    libjpeg-turbo8 \
-    libjpeg-turbo8-dev \
-    libswscale-dev \
-    libtool \
-    libzip-dev \
-    libwebp-dev \
-    pkgconf \
-    x264
+RUN apt-get install -q -y --no-install-recommends python-pip python-setuptools python-dev curl libssl-dev libcurl4-openssl-dev libjpeg-dev
 
 
-# Pip
-RUN pip install tornado jinja2 pillow pycurl
+RUN apt-get install -q -y --no-install-recommends motion ffmpeg v4l-utils
 
-RUN cd /tmp && git clone --branch 4.0 https://github.com/Motion-Project/motion.git motion-project
-RUN cd /tmp/motion-project && \
-    autoreconf -fiv && \
-    ./configure --prefix=/usr --without-pgsql --without-sqlite3 --without-mysql --with-ffmpeg=/usr && \
-    make && \
-    touch README \
-    make install && \
-    cp motion /usr/local/bin/motion && cd / && \
-    rm -rf /tmp/motion-project
-
+RUN pip install --upgrade pip
 RUN pip install motioneye
 
-#RUN apt-get remove -y \
-#    automake \
-#    autoconf \
-#    build-essential \
-#    git \
-#    libavcodec-dev \
-#    libavformat-dev \
-#    libavutil-dev \
-#    libcurl4-openssl-dev \
-#    libjpeg-dev \
-#    libssl-dev \
-#    libswscale-dev \
-#    pkgconf \
-#    python-dev \
-#    python-pip \
-#    python-setuptools \
-#    subversion && \
-#    apt-get autoclean -y && apt-get autoremove -y
 RUN  apt-get clean && apt-get autoclean -y && apt-get autoremove -y
 RUN  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
