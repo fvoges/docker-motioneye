@@ -14,79 +14,23 @@ ENV LANG en_GB.UTF-8
 ENV LC_TYPE en_GB.UTF-8
 ENV TZ Europe/London
 
-RUN apt-get -q -y --no-install-recommends install \
-    automake \
-    autoconf \
-    build-essential \
-    ffmpeg \
-    git \
-    libav-tools \
-    libavcodec-dev \
-    libavformat-dev \
-    libavutil-dev \
-    libcurl4-openssl-dev \
-    libjpeg-dev \
-    libssl-dev \
-    libswscale-dev \
-    pkgconf \
-    python-dev \
-    python-pip \
-    python-setuptools \
-    subversion \
-    v4l-utils
+RUN apt-get install -q -y --no-install-recommends \
+  build-essential \
+  motion \
+  ffmpeg \
+  v4l-utils \
+  python-pip \
+  python-dev \
+  curl \
+  libssl-dev \
+  libcurl4-openssl-dev \
+  libjpeg-dev
 
-RUN apt-get -q -y --no-install-recommends install \
-    autoconf \
-    automake \
-    build-essential \
-    git \
-    libavcodec-dev \
-    libavdevice-dev \
-    libavformat-dev \
-    libavutil-dev \
-    libjpeg-turbo8 \
-    libjpeg-turbo8-dev \
-    libswscale-dev \
-    libtool \
-    libzip-dev \
-    libwebp-dev \
-    pkgconf \
-    x264
-
-
-# Pip
-RUN pip install tornado jinja2 pillow pycurl
-
-RUN cd /tmp && git clone --branch 4.0 https://github.com/Motion-Project/motion.git motion-project
-RUN cd /tmp/motion-project && \
-    autoreconf -fiv && \
-    ./configure --prefix=/usr --without-pgsql --without-sqlite3 --without-mysql --with-ffmpeg=/usr && \
-    make && \
-    touch README \
-    make install && \
-    cp motion /usr/local/bin/motion && cd / && \
-    rm -rf /tmp/motion-project
-
+RUN pip install --upgrade pip setuptools
 RUN pip install motioneye
 
-#RUN apt-get remove -y \
-#    automake \
-#    autoconf \
-#    build-essential \
-#    git \
-#    libavcodec-dev \
-#    libavformat-dev \
-#    libavutil-dev \
-#    libcurl4-openssl-dev \
-#    libjpeg-dev \
-#    libssl-dev \
-#    libswscale-dev \
-#    pkgconf \
-#    python-dev \
-#    python-pip \
-#    python-setuptools \
-#    subversion && \
-#    apt-get autoclean -y && apt-get autoremove -y
+RUN mkdir -p /etc/motioneye /var/lib/motioneye
+
 RUN  apt-get clean && apt-get autoclean -y && apt-get autoremove -y
 RUN  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -94,7 +38,7 @@ RUN  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 VOLUME /etc/motioneye
 
 # PIDs
-VOLUME /var/run/motion
+#VOLUME /var/run/motion
 
 # Video & images
 VOLUME /var/lib/motioneye
