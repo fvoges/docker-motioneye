@@ -14,13 +14,22 @@ ENV LANG en_GB.UTF-8
 ENV LC_TYPE en_GB.UTF-8
 ENV TZ Europe/London
 
-RUN apt-get install -q -y --no-install-recommends python-pip python-setuptools python-dev curl libssl-dev libcurl4-openssl-dev libjpeg-dev
+RUN apt-get install -q -y --no-install-recommends \
+  build-essential \
+  motion \
+  ffmpeg \
+  v4l-utils \
+  python-pip \
+  python-dev \
+  curl \
+  libssl-dev \
+  libcurl4-openssl-dev \
+  libjpeg-dev
 
-
-RUN apt-get install -q -y --no-install-recommends motion ffmpeg v4l-utils
-
-RUN pip install --upgrade pip
+RUN pip install --upgrade pip setuptools
 RUN pip install motioneye
+
+RUN mkdir -p /etc/motioneye /var/lib/motioneye
 
 RUN  apt-get clean && apt-get autoclean -y && apt-get autoremove -y
 RUN  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
