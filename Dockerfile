@@ -29,7 +29,7 @@ RUN  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 VOLUME /etc/motioneye
 
 # PIDs
-VOLUME /var/run/motion
+#VOLUME /var/run/motion
 
 # Video & images
 VOLUME /var/lib/motioneye
